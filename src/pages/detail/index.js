@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import style from '@pages/detail/detail.module.less'
 
 
-class Detail extends Component {
+class Detail extends PureComponent {
     render() {
         return (
             <>

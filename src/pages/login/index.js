@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import style from '@pages/login/login.module.less'
 
 
-class Login extends Component {
+class Login extends PureComponent {
     render() {
         return (
             <>

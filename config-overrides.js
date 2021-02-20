@@ -14,6 +14,8 @@ module.exports = override(
         '@pages': path.resolve(__dirname, 'src/pages'),
         '@router': path.resolve(__dirname, 'src/router'),
         '@store': path.resolve(__dirname, 'src/store'),
+        '@common': path.resolve(__dirname, 'src/common'),
+        '@assets': path.resolve(__dirname, 'src/assets'),
 
     }),
     addLessLoader({
