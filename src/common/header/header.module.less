@@ -1,24 +1,99 @@
 @import "~@/index";
 
-.headerDiv{
-  min-width: 768px;
-  max-width: 1440px;
-  margin: 0 auto;
+.headerDiv {
   background-color: #fff;
   border-color: #f0f0f0;
   height: 56px;
-  .headerLogo{
-    float: left;
-    height: 56px;
-    padding: 0;
-    img{
-      height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 0;
+
+  .headerLeft{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .headerLogo {
+      display: flex;
+      height: 56px;
+      padding: 0;
+      img {
+        height: 100%;
+      }
+    }
+    .headerContext {
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      margin-left: 24px;
+      align-items: center;
+      span {
+        display: flex;
+        padding: 0 15px;
+        color: #333;
+        cursor: pointer;
+      }
+      .inputDefalut{
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        background: #eee;
+        outline: none;
+        border: none;
+      }
+    }
+
+  }
+
+
+  .headerRight {
+    display: flex;
+    align-items: center;
+    .headerRightAa{
+      color: #969696 ;
+      line-height: 20px ;
+      padding: 0px 10px ;
+      font-size: 16px ;
+      cursor: pointer;
+    }
+    .headerRightlogin{
+      margin: 0px 6px 0 10px;
+      font-size: 16px;
+      color: #969696;
+      cursor: pointer;
+
+    }
+    .headerRightRegistered{
+      .center-w-h;
+      width: 80px;
+      height: 38px;
+      line-height: 24px;
+      margin: 0 5px 0 15px;
+      border: 1px solid rgba(236,97,73,.7);
+      border-radius: 20px;
+      font-size: 16px;
+      color: #ea6f5a;
+      background-color: transparent;
+      cursor: pointer;
+
+    }
+    .headerRightWrite {
+      span{
+        margin-right: 4px;
+      }
+      .center-w-h;
+      width: 100px;
+      height: 40px;
+      line-height: 24px;
+      margin: 0 5px 0 15px;
+      border-radius: 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #ea6f5a;
+      cursor: pointer;
+
     }
   }
-  .herderContext{
-    .center-w-h;
-    height: 56px;
-  }
 }
-
 

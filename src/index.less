@@ -11,3 +11,34 @@
     justify-content: center;
     align-items: center;
 }
+.focusInput{
+    width: 240px;
+}
+.noFocusInput{
+    width: 160px;
+}
+.headerSearch{
+    padding: 0 20px 0 20px;
+    height: 38px;
+    font-size: 14px;
+    border: 1px solid #eee;
+    border-radius: 40px;
+    background: #eee;
+    outline: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    &.fade-enter{
+        transition: all 1s ease-out;
+    }
+    &.fade-enter-active{
+        width: 240px;
+    }
+    &.fade-exit{
+        transition: all 1s ease-out;
+    }
+    &.fade-exit-active{
+        width: 160px;
+    }
+}
