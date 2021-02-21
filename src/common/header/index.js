@@ -10,8 +10,7 @@ import '@/index.less'
 class Header extends PureComponent {
 
     render() {
-        console.log('111111', logoIcon);
-        const {isFocus,hasToken}=this.props;
+        const {isFocus,hasToken,searchList}=this.props;
         return (
             <>
                 <div className={style.headerDiv}>
@@ -44,7 +43,7 @@ class Header extends PureComponent {
                                     <input type="text" name="q" id="q" value="" autoComplete="off" placeholder="搜索"
                                            className={style.inputDefalut}
                                            onBlur={this.props.inputBlur}
-                                           onFocus={this.props.inputFocus}
+                                           onFocus={()=>this.props.inputFocus(searchList)}
                                     />
                                     <i className="iconfont iconsousuo"></i>
                                 </div>
@@ -71,13 +70,15 @@ class Header extends PureComponent {
 const mapStateToProps=(state)=>{
   return{
       isFocus: state.header.isFocus,
-      hasToken:state.login.hasToken
+      hasToken:state.login.hasToken,
+      searchList:state.header.searchList||[],
   }
 };
 const mapDisPathToProps=(dispath)=>{
    return{
-       inputFocus(){
-           dispath(actionCreators.searchFocus())
+       inputFocus(searchList){
+           console.log('zzzzzzzzzzz',searchList);
+           // dispath(actionCreators.searchFocus());
            dispath(actionCreators.getSearchList())
        },
        inputBlur(){
