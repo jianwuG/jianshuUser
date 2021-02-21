@@ -45,10 +45,14 @@
     ]
   },
   "devDependencies": {
+    "axios": "^0.21.1",
     "dotenv-cli": "^4.0.0",
+    "mock": "^0.1.1",
+    "mockjs": "^1.1.0",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8"
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   },
   "homepage": "."
 }

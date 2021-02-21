@@ -3,21 +3,15 @@ import {connect} from 'react-redux'
 import style from '@common/header/header.module.less'
 import logoIcon from '@assets/logo.png'
 import {CSSTransition} from 'react-transition-group'
+import { actionCreators } from './store';
+
 import '@/index.less'
 
 class Header extends PureComponent {
-    constructor() {
-        super();
-        this.state = {
-            hasToken: false,
-        }
-    };
-   async componentDidMount() {
-    }
 
     render() {
         console.log('111111', logoIcon);
-        const {isFocus}=this.props;
+        const {isFocus,hasToken}=this.props;
         return (
             <>
                 <div className={style.headerDiv}>
@@ -28,7 +22,7 @@ class Header extends PureComponent {
 
                         <div className={style.headerContext}>
                             {
-                                !this.state.hasToken ? (
+                                !hasToken ? (
                                     <>
                                         <span>首页</span>
                                         <span>下载app</span>
@@ -76,16 +70,18 @@ class Header extends PureComponent {
 }
 const mapStateToProps=(state)=>{
   return{
-      isFocus: state.isFocus
+      isFocus: state.header.isFocus,
+      hasToken:state.login.hasToken
   }
 };
 const mapDisPathToProps=(dispath)=>{
    return{
        inputFocus(){
-           dispath({type:'search_focus'})
+           dispath(actionCreators.searchFocus())
+           dispath(actionCreators.getSearchList())
        },
        inputBlur(){
-           dispath({type:'search_blur'})
+           dispath(actionCreators.searchBlur())
        }
    }
 };
