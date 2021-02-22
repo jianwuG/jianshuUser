@@ -7,10 +7,12 @@ import { actionCreators } from './store';
 
 import '@/index.less'
 
+
 class Header extends PureComponent {
 
     render() {
-        const {isFocus,hasToken,searchList}=this.props;
+        const {isFocus,hasToken,defaultPageSize,
+            searchList, inputFocus,inputBlur,isSearchEnter}=this.props;
         return (
             <>
                 <div className={style.headerDiv}>
@@ -34,20 +36,21 @@ class Header extends PureComponent {
                                     </>
                                 )
                             }
-                            <CSSTransition
-                                in={isFocus}
-                                timeout={1000}
-                                classNames="fade"
-                            >
-                                <div className={isFocus?"headerSearch focusInput":'headerSearch noFocusInput'}>
-                                    <input type="text" name="q" id="q" value="" autoComplete="off" placeholder="搜索"
-                                           className={style.inputDefalut}
-                                           onBlur={this.props.inputBlur}
-                                           onFocus={()=>this.props.inputFocus(searchList)}
-                                    />
-                                    <i className="iconfont iconsousuo"></i>
-                                </div>
-                            </CSSTransition>
+                                <CSSTransition
+                                    in={isFocus}
+                                    timeout={1000}
+                                    classNames="fade"
+                                >
+                                    <div className={isFocus?"headerSearch focusInput":'headerSearch noFocusInput'}>
+                                        <input type="text" name="q" id="q" value="" autoComplete="off" placeholder="搜索"
+                                               className={style.inputDefalut}
+                                               onBlur={inputBlur}
+                                               onFocus={()=>inputFocus(searchList,defaultPageSize)}
+                                        />
+                                        <i className="iconfont iconsousuo"></i>
+                                        {(isFocus||isSearchEnter)&&this.getSearchList()}
+                                    </div>
+                                </CSSTransition>
 
                         </div>
                     </div>
@@ -66,23 +69,65 @@ class Header extends PureComponent {
             </>
         )
     };
+    getSearchList(){
+        const {searchList,pageNum,defaultPageSize,totalPageNum,
+            handleMouseEnter,handleMouseLeave,changeFocusList}=this.props;
+        const list=searchList.toJS().slice((pageNum-1)*defaultPageSize,pageNum*defaultPageSize);
+        return(
+           <div className={style.searchDiv}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+           >
+               <div className={style.searchChange} onClick={()=>changeFocusList(pageNum,totalPageNum)}>切换</div>
+               <div className={style.searchList}>
+                   {
+                       list.map(item=>(
+                           <span key={item.id}>
+                           {item.name}
+                       </span>
+                       ))
+                   }
+               </div>
+           </div>
+       )
+    };
+    clickSearchDiv=async()=>{
+
+    }
+
 }
+
 const mapStateToProps=(state)=>{
   return{
-      isFocus: state.header.isFocus,
-      hasToken:state.login.hasToken,
-      searchList:state.header.searchList||[],
+      isFocus: state.getIn(['header', 'isFocus']),
+      hasToken:state.getIn(['login', 'hasToken']),
+      searchList:state.getIn(['header', 'searchList']),
+      defaultPageSize:state.getIn(['header', 'defaultPageSize']),
+      pageNum:state.getIn(['header', 'pageNum']),
+      totalPageNum:state.getIn(['header', 'totalPageNum']),
+      isSearchEnter:state.getIn(['header', 'isSearchEnter']),
   }
 };
 const mapDisPathToProps=(dispath)=>{
    return{
-       inputFocus(searchList){
-           console.log('zzzzzzzzzzz',searchList);
-           // dispath(actionCreators.searchFocus());
-           dispath(actionCreators.getSearchList())
+       inputFocus(searchList,defaultPageSize){
+           dispath(actionCreators.searchFocus());
+           searchList.size===0&&dispath(actionCreators.getSearchList(defaultPageSize))
        },
        inputBlur(){
            dispath(actionCreators.searchBlur())
+       },
+       handleMouseEnter(){
+           dispath(actionCreators.searchEnter())
+
+       },
+       handleMouseLeave(){
+           dispath(actionCreators.searchLever())
+
+       },
+       changeFocusList(pageNum,totalPageNum){
+           let num=pageNum<totalPageNum?pageNum+1:1;
+           dispath(actionCreators.changeList(num))
        }
    }
 };
