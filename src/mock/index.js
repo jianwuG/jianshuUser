@@ -59,12 +59,12 @@ Mock.mock('/api/getBloggerInfo', 'get', {
                 canClick: false,
             },
         ],
-        'createProject|1-5': [{
+        'createProject|3-10': [{
             id: '@increment(1)',
             name: '@projectName',
             icon: "@dataImage('100x100')"
         }],
-        'managementProject|1-5': [{
+        'managementProject|1-10': [{
             id: '@increment(1)',
             name: '@projectName',
             icon: "@dataImage('100x100')"

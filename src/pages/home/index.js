@@ -7,10 +7,27 @@ class Home extends PureComponent {
     componentDidMount() {
         this.props.getBloggerInfo();
     }
+     getProject=(text,projectInfo)=>{
+        return(
+            <div className={style.projectDiv}>
+                <span>{text}</span>
+                {
+                    projectInfo&&projectInfo.map(item=>(
+                        <div key={item.id} className={style.projectItem}>
+                            <img src={item.icon} alt=''/>
+                            <p>{item.name}</p>
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    };
 
     render() {
         const {bloggerInfo} = this.props;
-        const {url, name, gender, numInfo} = bloggerInfo.toJS();
+        const {url, name, gender, numInfo,corpus,
+            createProject,managementProject
+        } = bloggerInfo.toJS();
 
         return (
             <>
@@ -19,34 +36,52 @@ class Home extends PureComponent {
                         <div className={style.leftUserInfo}>
                             <img src={url} alt="" className={style.userInfoUrl}/>
                             <div className={style.userInfoContext}>
-                                <div>
+                                <div className={style.userName}>
                                     <span>{name}</span>
-                                    <span>{gender}</span>
+                                    <i className={gender ? 'iconnan iconfont' : 'iconnv iconfont'}></i>
                                 </div>
                                 {
-                                    numInfo &&(
-                                    <div>
-                                        {
-                                            numInfo.map(item=>(
-                                    <div>
-                                        <span>{item.text}</span>
-                                        <span>{item.num}</span>
+                                    numInfo && (
+                                      <div className={style.numInfoDiv}>
+                                          {
+                                              numInfo.map(item => (
+                                                  <div className={style.numInfoDivItm}>
+                                                      <span>{item.text}</span>
+                                                      <span>{item.num}</span>
+                                                  </div>
+                                              ))
+                                          }
                                       </div>
-                                            ))
-                                        }
-                                    </div>)
+                                    )
 
                                 }
                             </div>
                             <div className={style.userInfoBtn}>
-                                <span>发简信</span>
-                                <span>+关注</span>
+                                <span className={style.btnSend}>发简信</span>
+                                <span className={style.btnAdd}>+关注</span>
                             </div>
                         </div>
                     </div>
                     <div className={style.contentRight}>
-
+                        {
+                            this.getProject("他创建的专题",createProject)
+                        }
+                        {
+                            this.getProject('他管理的专题',managementProject)
+                        }
+                        <div className={style.corpusDiv}>
+                            <span>他的文集</span>
+                            {
+                                corpus&&corpus.map(item=>(
+                                    <div className={style.corpusItem}>
+                                        <i className='iconfont iconsvgwrite'></i>
+                                        <p>{item.name}</p>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
+
                 </div>
             </>
         )
