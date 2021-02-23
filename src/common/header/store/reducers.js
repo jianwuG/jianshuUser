@@ -5,6 +5,7 @@ const defaultState=fromJS ({
     isFocus:false,
     isSearchEnter:false,
     searchList:[],
+    historyList:[],
     pageNum:1,
     totalPageNum:1,
     defaultPageSize:10,
@@ -26,7 +27,11 @@ export default (state = defaultState,action)=>{
                 totalPageNum:action.totalPageNum
             });
         case actionTypes.CHANGE_LIST:
-            return state.set("pageNum",action.pageNum)
+            return state.set("pageNum",action.pageNum);
+        case actionTypes.ADD_HISTORY_LIST:
+            return state.set("historyList",action.list);
+        case actionTypes.CLEAR_HISTORY_LIST:
+            return state.set("historyList",fromJS([]))
         default:
             return state
 

@@ -1,2 +1,3 @@
 import reducers from './reducers'
-export {reducers}
+import * as actionCreators from './actionCreators';
+export {reducers,actionCreators}

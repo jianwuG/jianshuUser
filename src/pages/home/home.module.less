@@ -1,5 +1,38 @@
 .homeContent{
-  width: 100vw;
-  height: 100vh;
-  background-color: pink;
+  width: calc(100vw - 20%);
+  height: calc(100vh - 56px);
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  .contentLeft{
+    margin-left: 124px;
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    .leftUserInfo{
+      display: flex;
+      flex-direction: row;
+      .userInfoUrl{
+        display: flex;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-right: 16px;
+      }
+      .userInfoContext{
+        display: flex;
+        flex-direction: column;
+      }
+      .userInfoBtn{
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+  .contentRight{
+    display: flex;
+    flex-direction: column;
+    flex:2;
+  }
 }
