@@ -4,6 +4,8 @@ import style from '@common/header/header.module.less'
 import logoIcon from '@assets/logo.png'
 import {CSSTransition} from 'react-transition-group'
 import {actionCreators} from './store';
+import {actionCreators as loginActionCreators} from '@pages/login/store'
+import { Link } from 'react-router-dom';
 
 import '@/index.less'
 
@@ -13,7 +15,7 @@ class Header extends PureComponent {
     render() {
         const {
             isFocus, hasToken, defaultPageSize,historyList,
-            searchList, inputFocus, inputBlur, isSearchEnter
+            searchList, inputFocus, inputBlur, isSearchEnter,logout
         } = this.props;
         return (
             <>
@@ -65,7 +67,10 @@ class Header extends PureComponent {
 
                     <div className={style.headerRight}>
                         <span className={style.headerRightAa}>Aa</span>
-                        <a className={style.headerRightlogin}>登录</a>
+                        {
+                            !hasToken?<Link to='/login'><a className={style.headerRightlogin} >登录</a></Link>:
+                                <a className={style.headerRightlogin} onClick={logout} >退出登录</a>
+                        }
                         <a className={style.headerRightRegistered}>注册</a>
                         <a className={style.headerRightWrite}>
                             <span className="iconfont iconyumaobi"></span>
@@ -126,10 +131,15 @@ class Header extends PureComponent {
            this.inputRef.value&&this.props.addHistoryList(this.inputRef.value,historyList);
             this.inputRef.value='';
         }
+    };
+    goLogin=async ()=>{
+        console.log(
+            '111111111111',this.props.history
+        );
+      this.props.history.push('/login');
     }
 
 }
-
 const mapStateToProps = (state) => {
     return {
         isFocus: state.getIn(['header', 'isFocus']),
@@ -168,6 +178,9 @@ const mapDisPathToProps = (dispath) => {
         },
         clearHistoryList(){
             dispath(actionCreators.clearHistoryList())
+        },
+        logout(){
+            dispath(loginActionCreators.logout())
         }
     }
 };

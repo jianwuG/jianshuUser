@@ -76,3 +76,10 @@ Mock.mock('/api/getBloggerInfo', 'get', {
 
     }
 });
+
+
+Mock.mock('/api/login','post',{
+    status:200,
+    message:'登录成功'
+
+})

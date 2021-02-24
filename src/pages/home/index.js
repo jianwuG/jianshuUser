@@ -2,6 +2,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import style from '@pages/home/home.module.less'
 import {actionCreators} from './store';
+import Header from '@common/header';
+import WordTab from './component/wordTab'
 
 class Home extends PureComponent {
     componentDidMount() {
@@ -31,6 +33,7 @@ class Home extends PureComponent {
 
         return (
             <>
+                <Header></Header>
                 <div className={style.homeContent}>
                     <div className={style.contentLeft}>
                         <div className={style.leftUserInfo}>
@@ -81,6 +84,7 @@ class Home extends PureComponent {
                             }
                         </div>
                     </div>
+                    <WordTab></WordTab>
 
                 </div>
             </>
