@@ -83,3 +83,29 @@ Mock.mock('/api/login','post',{
     message:'登录成功'
 
 })
+
+Mock.mock('/api/getWordList','get',{
+    status:200,
+    message:'获取list成功',
+    'data|20':[
+        {
+            id:'@increment(1)',
+            name:'@cword(2,6)',
+            isTop:'@boolean()',
+            img: "@dataImage('125x100')",
+            wordContext: "@cparagraph(1,2)",
+            "info|5":[
+                {
+                    id:'@increment(1)',
+                    zsNum:'@natural(0,10)',
+                    lkNum:'@natural(100,10000)',
+                    plNum:'@natural(10,1000)',
+                    dzNum:'@natural(10,1000)',
+                    xhNum:'@natural(10,1000)',
+                }
+            ],
+            date:"@datetime('yyyy-MM-dd A HH:mm:ss')"
+
+        }
+    ]
+})

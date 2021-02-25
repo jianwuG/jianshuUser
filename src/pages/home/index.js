@@ -1,9 +1,10 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import style from '@pages/home/home.module.less'
-import {actionCreators} from './store';
 import Header from '@common/header';
 import WordTab from './component/wordTab'
+import {actionCreators} from './store';
+import style from '@pages/home/home.module.less'
+
 
 class Home extends PureComponent {
     componentDidMount() {
@@ -50,7 +51,11 @@ class Home extends PureComponent {
                                               numInfo.map(item => (
                                                   <div className={style.numInfoDivItm}>
                                                       <span>{item.text}</span>
-                                                      <span>{item.num}</span>
+                                                      <span>{item.num}
+                                                          {
+                                                              item.canClick&&<i> ></i>
+                                                          }
+                                                      </span>
                                                   </div>
                                               ))
                                           }
@@ -64,6 +69,8 @@ class Home extends PureComponent {
                                 <span className={style.btnAdd}>+关注</span>
                             </div>
                         </div>
+                        <WordTab></WordTab>
+
                     </div>
                     <div className={style.contentRight}>
                         {
@@ -84,7 +91,6 @@ class Home extends PureComponent {
                             }
                         </div>
                     </div>
-                    <WordTab></WordTab>
 
                 </div>
             </>
