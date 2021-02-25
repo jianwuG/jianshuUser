@@ -1,7 +1,65 @@
 .detail{
   width: 100vw;
   height: calc(100vh - 56px);
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #f9f9f9;
+  .detailContext{
+    width: 80%;
+    height: calc(100% - 20px);
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: #fff;
+    margin-top: 20px;
+    padding: 30px;
+    .contextTitle{
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 32px;
+      h1{
+        font-size: 30px;
+        font-weight: 700;
+        word-break: break-word;
+        color: #404040;
+        text-rendering: optimizelegibility;
+        margin-bottom: 20px;
+      }
+      img{
+        border-radius: 50%;
+      }
+      .contextBlogger{
+        display: flex;
+        flex-direction: row;
+        .contextBloggerInfo{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin-left: 14px;
+          span{
+            font-size: 16px;
+          }
+          span:last-child{
+            color: #969696;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+    .contextDiv{
+      color: #404040;
+      font-size: 16px;
+      line-height:20px;
+      letter-spacing:2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img{
+        display: flex;
+        margin-bottom: 16px;
+      }
+
+    }
+  }
 }

@@ -94,7 +94,7 @@ Mock.mock('/api/getWordList','get',{
             isTop:'@boolean()',
             img: "@dataImage('125x100')",
             wordContext: "@cparagraph(1,2)",
-            "info|5":[
+            info:
                 {
                     id:'@increment(1)',
                     zsNum:'@natural(0,10)',
@@ -103,9 +103,25 @@ Mock.mock('/api/getWordList','get',{
                     dzNum:'@natural(10,1000)',
                     xhNum:'@natural(10,1000)',
                 }
-            ],
-            date:"@datetime('yyyy-MM-dd A HH:mm:ss')"
+            ,
+            date:"@datetime('yyyy-MM-dd HH:mm:ss')"
 
         }
     ]
+});
+
+
+
+Mock.mock('/api/getDetailInfo','get',{
+    status:200,
+    message:'获取文章成功',
+    data:{
+        word:'@csentence(300,500)',
+        title:'@ctitle(3,8)',
+        img:"@dataImage('50x50')",
+        date:"@datetime('yyyy-MM-dd HH:mm:ss')",
+        name:'@cname(3,10)',
+        wordUrl:"@dataImage('660x360')",
+        isShowUrl:'@boolean()'
+    }
 })

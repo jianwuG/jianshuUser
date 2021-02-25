@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import Header from '@common/header';
 import WordTab from './component/wordTab'
+import Focus from './component/focus'
 import {actionCreators} from './store';
 import style from '@pages/home/home.module.less'
 
@@ -27,7 +28,7 @@ class Home extends PureComponent {
     };
 
     render() {
-        const {bloggerInfo} = this.props;
+        const {bloggerInfo,showFocus,setShowFocus} = this.props;
         const {url, name, gender, numInfo,corpus,
             createProject,managementProject
         } = bloggerInfo.toJS();
@@ -48,8 +49,8 @@ class Home extends PureComponent {
                                     numInfo && (
                                       <div className={style.numInfoDiv}>
                                           {
-                                              numInfo.map(item => (
-                                                  <div className={style.numInfoDivItm}>
+                                              numInfo.map((item,index) => (
+                                                  <div className={style.numInfoDivItm} key={item.id} onClick={()=>setShowFocus(true,index)}>
                                                       <span>{item.text}</span>
                                                       <span>{item.num}
                                                           {
@@ -69,7 +70,10 @@ class Home extends PureComponent {
                                 <span className={style.btnAdd}>+关注</span>
                             </div>
                         </div>
-                        <WordTab></WordTab>
+                        {
+                            showFocus?<Focus></Focus>:<WordTab></WordTab>
+
+                        }
 
                     </div>
                     <div className={style.contentRight}>
@@ -100,13 +104,26 @@ class Home extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        bloggerInfo: state.getIn(['home', 'bloggerInfo'])
+        bloggerInfo: state.getIn(['home', 'bloggerInfo']),
+        showFocus: state.getIn(['home', 'showFocus'])
     }
 };
 const mapDispatchToProps = (dispath) => {
     return {
         getBloggerInfo() {
             dispath(actionCreators.getBloggerInfo())
+        },
+        setShowFocus(isShow,index){
+            console.log('11111111',isShow,index);
+            let _isShow;
+            if(index===1||index===0){
+                _isShow=true;
+            }
+            else if(index===2){
+                _isShow=false;
+            }
+
+            (index===1||index===2||index===0)&&dispath(actionCreators.setShowFocus(_isShow))
         }
     }
 };

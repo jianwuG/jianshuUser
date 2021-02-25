@@ -27,12 +27,19 @@ export const getWordList=(option)=>{
        });
    }
 };
+export const setShowFocus=(isShow,index)=>{
+    return{
+        type:actionType.SET_SHOW_FOCUS,
+        isShow
+    }
+}
 const setWordList=(list)=>{
     return{
         type:actionType.SET_WORD_LIST,
         list:fromJS(list)
     }
-}
+};
+
 const setBloggerInfo=(info)=>{
     return{
         type:actionType.SET_BLOGGER_INFO,
