@@ -20,7 +20,6 @@ export const setTabIndex=(index)=>{
 export const getWordList=(option)=>{
    return (dispath)=>{
        axios.get(`/api/getWordList`).then(res=>{
-           console.log('111111111111',res.data.data,Array.isArray(res.data.data));
            dispath(setWordList(res.data.data));
        }).catch(err=>{
            console.log('getWordList err',err);
@@ -32,7 +31,32 @@ export const setShowFocus=(isShow,index)=>{
         type:actionType.SET_SHOW_FOCUS,
         isShow
     }
+};
+
+export const setFocusIndex=(index)=>{
+    return{
+        type:actionType.SET_FOCUS_INDEX,
+        index
+    }
+};
+export const getFans=()=>{
+  return (dispath)=>{
+      axios.get('/api/getFans').then(res=>{
+          console.log('res',res.data.listInfo);
+          dispath(setFansList(res.data.listInfo));
+      }).catch(err=>{
+          console.error(err)
+      })
+  }
+};
+
+const setFansList=(info)=>{
+    return{
+        type:actionType.SET_FANS_LIST,
+        info:fromJS(info)
+    }
 }
+
 const setWordList=(list)=>{
     return{
         type:actionType.SET_WORD_LIST,

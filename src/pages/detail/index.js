@@ -21,7 +21,7 @@ class Detail extends PureComponent {
                         <div className={style.contextTitle}>
                             <h1 className={style.title}>{info.title}</h1>
                             <div className={style.contextBlogger}>
-                              <img src={info.img}/>
+                              <img src={info.img} alt=""/>
                               <div className={style.contextBloggerInfo}>
                                   <span>{info.name}</span>
                                   <span>{info.date}</span>

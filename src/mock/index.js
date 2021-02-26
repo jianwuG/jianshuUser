@@ -124,4 +124,45 @@ Mock.mock('/api/getDetailInfo','get',{
         wordUrl:"@dataImage('660x360')",
         isShowUrl:'@boolean()'
     }
-})
+});
+
+Mock.mock('/api/getFans','get',{
+    status:200,
+    message:'获取粉丝和关注者',
+    listInfo:{
+        'fansList|5-20':[
+            {
+                id:'@increment(1)',
+                img:"@dataImage('40x40')",
+                name:'@cname(3,10)',
+                gender:'@boolean()',
+                info:
+                    {
+                        id:'@increment(1)',
+                        zsNum:'@natural(0,10)',
+                        lkNum:'@natural(100,10000)',
+                        plNum:'@natural(10,1000)',
+                        dzNum:'@natural(10,1000)',
+                        xhNum:'@natural(10,1000)',
+                    },
+            }
+        ],
+        'lookList|5-20':[
+            {
+                id:'@increment(1)',
+                img:"@dataImage('40x40')",
+                name:'@cname(3,10)',
+                gender:'@boolean()',
+                info:
+                    {
+                        id:'@increment(1)',
+                        zsNum:'@natural(0,10)',
+                        lkNum:'@natural(100,10000)',
+                        plNum:'@natural(10,1000)',
+                        dzNum:'@natural(10,1000)',
+                        xhNum:'@natural(10,1000)',
+                    },
+            }
+        ]
+    }
+});

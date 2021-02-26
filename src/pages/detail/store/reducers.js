@@ -4,11 +4,10 @@ const defaultState=fromJS({
     detailInfo:{}
 });
 
-
 export default (state = defaultState,action)=>{
-    switch (action.type) {
+    switch(action.type) {
         case actionType.SETDRTAIINFO:
-            return state.set('detailInfo',action.info)
+            return state.set('detailInfo',action.info);
         default:
             return state;
     }

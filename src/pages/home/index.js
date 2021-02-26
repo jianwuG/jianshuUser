@@ -114,7 +114,6 @@ const mapDispatchToProps = (dispath) => {
             dispath(actionCreators.getBloggerInfo())
         },
         setShowFocus(isShow,index){
-            console.log('11111111',isShow,index);
             let _isShow;
             if(index===1||index===0){
                 _isShow=true;
@@ -123,7 +122,10 @@ const mapDispatchToProps = (dispath) => {
                 _isShow=false;
             }
 
-            (index===1||index===2||index===0)&&dispath(actionCreators.setShowFocus(_isShow))
+            (index===1||index===2||index===0)&&
+            dispath(actionCreators.setShowFocus(_isShow))&&
+            dispath(actionCreators.setFocusIndex(index))&&
+            dispath(actionCreators.getFans());
         }
     }
 };

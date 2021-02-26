@@ -31,7 +31,6 @@ export const getSearchList=(defaultPageSize)=>{
   return (dispath)=>{
       axios.get('/api/getSearchList').then((res)=>{
           dispath(setSearchList(res.data.data,defaultPageSize));
-          console.log('1111111111',res.data.data);
       }).catch((err)=>{
           console.log(err);
       })
@@ -39,7 +38,6 @@ export const getSearchList=(defaultPageSize)=>{
 };
 //切换搜索建议list
 export const changeList=(num)=>{
-    console.log('11111111111111',num);
   return{
       type:actionTypes.CHANGE_LIST,
       pageNum:num

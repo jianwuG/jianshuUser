@@ -2,10 +2,12 @@ import {fromJS} from "immutable";
 import * as actionTypes from './actionTypes'
 
 const defaultState=fromJS({
-   bloggerInfo:{},
+    bloggerInfo:{},
     tabIndex:null,
     wordList:[],
     showFocus:false,
+    focusIndex:null,
+    fansInfo:{},
 });
 export default (state = defaultState,action)=>{
    switch (action.type) {
@@ -17,6 +19,10 @@ export default (state = defaultState,action)=>{
            return state.set('wordList',action.list);
        case actionTypes.SET_SHOW_FOCUS:
            return state.set('showFocus',action.isShow)
+       case actionTypes.SET_FOCUS_INDEX:
+           return state.set('focusIndex',action.index)
+       case actionTypes.SET_FANS_LIST:
+           return state.set('fansInfo',action.info)
        default:
            return state;
    }
