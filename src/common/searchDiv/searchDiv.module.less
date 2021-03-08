@@ -1,0 +1,75 @@
+.searchDiv {
+  position: absolute;
+  top: 56px;
+  margin-left: -30px;
+  width: 240px;
+  padding: 0 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+
+  .searchAdvice {
+    display: flex;
+    flex-direction: column;
+    .searchChange {
+      display: inline-block;
+      font-size: 15px;
+      color: pink;
+      text-align: right;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    .searchList {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+
+      span {
+        margin: 6px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #969696;
+        cursor: pointer;
+        border: 1px solid #969696;
+        padding: 0 4px;
+      }
+    }
+  }
+  .searchHistoryDiv{
+    display: flex;
+    flex-direction: column;
+
+    .searchDel{
+      display: inline-block;
+      font-size: 15px;
+      color: pink;
+      text-align: right;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+    .searchHistory{
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      padding: 12px 0 4px 0;
+      border-bottom: 1px solid #eee;
+      span{
+        padding: 2px 3px;
+        margin-bottom: 8px;
+        margin-right: 6px;
+        border: 1px #969696 solid;
+        color: #969696;
+        display:inline-block;
+        overflow: hidden; //超出的文本隐藏
+        text-overflow: ellipsis; //溢出用省略号显示
+        white-space: nowrap; //溢出不换行
+        max-width: 60px;
+      }
+    }
+  }
+
+
+}

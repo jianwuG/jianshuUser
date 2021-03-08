@@ -40,6 +40,7 @@ export const setFocusIndex=(index)=>{
     }
 };
 export const getFans=()=>{
+    console.log('--------------');
   return (dispath)=>{
       axios.get('/api/getFans').then(res=>{
           console.log('res',res.data.listInfo);

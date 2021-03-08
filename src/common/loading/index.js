@@ -1,12 +1,7 @@
 import React from 'react';
-import style from '@common/loading/loading.module.less'
+import style from './loading.module.less'
 
 
- const Loading=()=>{
-    return(
-        <div className={style.loading}>
-            loading....
-        </div>
-    )
-};
+ const Loading=()=>(<div className={style.loading}>loading....</div>);
+
 export default Loading;
