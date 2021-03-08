@@ -1,111 +1,83 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
+import React, {useRef} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import style from '@common/header/header.module.less'
 import logoIcon from '@assets/logo.png'
 import {CSSTransition} from 'react-transition-group'
 import {actionCreators} from './store';
 import {actionCreators as loginActionCreators} from '@pages/login/store'
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {Row,Col,Space,Button} from 'antd'
 
 import '@/index.less'
 
-
-class Header extends PureComponent {
-
-    render() {
-        const {
-            isFocus, hasToken, defaultPageSize,historyList,
-            searchList, inputFocus, inputBlur, isSearchEnter,logout
-        } = this.props;
-        return (
-            <>
-                <div className={style.headerDiv}>
-                    <div className={style.headerLeft}>
-                        <a href='/' className={style.headerLogo}>
-                            <img alt="logo" src={logoIcon}/>
-                        </a>
-
-                        <div className={style.headerContext}>
-                            {
-                                !hasToken ? (
-                                    <>
-                                        <span>首页</span>
-                                        <span>下载app</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span>发现</span>
-                                        <span>关注</span>
-                                        <span>消息</span>
-                                    </>
-                                )
-                            }
-                            <CSSTransition
-                                in={isFocus}
-                                timeout={1000}
-                                classNames="fade"
-                            >
-                                <div className={isFocus ? "headerSearch focusInput" : 'headerSearch noFocusInput'}>
-                                    <input type="text" name="q" id="q"
-                                           autoComplete="off"
-                                           placeholder="搜索"
-                                           className={style.inputDefalut}
-                                           onBlur={inputBlur}
-                                           onFocus={() => inputFocus(searchList, defaultPageSize)}
-                                           onKeyDown={(e)=>this.onKeyDownDiv(true,historyList,e)}
-                                           ref={(input)=>{this.inputRef=input}}
-                                    />
-                                    <div className={isFocus?style.iconSearch:''} onClick={(e)=>this.onKeyDownDiv(false,historyList,e)}>
-                                        <i className="iconfont iconsousuo" ></i>
-                                    </div>
-                                    {(isFocus || isSearchEnter) && this.getSearchList()}
-                                </div>
-                            </CSSTransition>
-
-                        </div>
-                    </div>
-
-                    <div className={style.headerRight}>
-                        <span className={style.headerRightAa}>Aa</span>
-                        {
-                            !hasToken?<Link to='/login'><a className={style.headerRightlogin} >登录</a></Link>:
-                                <a className={style.headerRightlogin} onClick={logout} >退出登录</a>
-                        }
-                        <a className={style.headerRightRegistered}>注册</a>
-                        <a className={style.headerRightWrite}>
-                            <span className="iconfont iconyumaobi"></span>
-                            写文章
-                        </a>
-                    </div>
-
-                </div>
-            </>
-        )
+const Header = () => {
+    const {isFocus, hasToken, searchList, defaultPageSize, pageNum, totalPageNum, isSearchEnter, historyList} = useSelector((state) => ({
+        isFocus: state.getIn(['header', 'isFocus']),
+        hasToken: state.getIn(['login', 'hasToken']),
+        searchList: state.getIn(['header', 'searchList']),
+        defaultPageSize: state.getIn(['header', 'defaultPageSize']),
+        pageNum: state.getIn(['header', 'pageNum']),
+        totalPageNum: state.getIn(['header', 'totalPageNum']),
+        isSearchEnter: state.getIn(['header', 'isSearchEnter']),
+        historyList: state.getIn(['header', 'historyList'])
+    }));
+    const inputRef=useRef();
+    const dispatch = useDispatch();
+    const inputFocus = () => {
+        dispatch(actionCreators.searchFocus());
+        searchList.size === 0 && dispatch(actionCreators.getSearchList(defaultPageSize))
+    };
+    const inputBlur = () => {
+        dispatch(actionCreators.searchBlur())
+    };
+    const handleMouseEnter = () => {
+        dispatch(actionCreators.searchEnter())
+    };
+    const handleMouseLeave = () => {
+        dispatch(actionCreators.searchLever())
+    };
+    const changeFocusList = () => {
+        let num = pageNum < totalPageNum ? pageNum + 1 : 1;
+        dispatch(actionCreators.changeList(num))
     };
 
-    getSearchList() {
-        const {
-            searchList, pageNum, defaultPageSize, totalPageNum,historyList,
-            handleMouseEnter, handleMouseLeave, changeFocusList,clearHistoryList
-        } = this.props;
+    const addHistoryList = (value) => {
+        dispatch(actionCreators.addHistoryList(historyList.push(value)));
+    };
+    const clearHistoryList = () => {
+        dispatch(actionCreators.clearHistoryList())
+    };
+    const logout = () => {
+        dispatch(loginActionCreators.logout())
+    };
+    const onKeyDownDiv = async (isEnter,historyList,e) => {
+        if(isEnter&&e.keyCode === 13||!isEnter) {
+            let value=inputRef.current.value;
+            value&&addHistoryList(value,historyList);
+            inputRef.current.value='';
+        }
+    };
+
+    const getSearchDIvList=()=>{
+
         const list = searchList.toJS().slice((pageNum - 1) * defaultPageSize, pageNum * defaultPageSize);
         const hList=historyList.toJS();
         return (
             <div className={style.searchDiv}>
                 {
                     hList.length>0&&
-                   <div className={style.searchHistoryDiv}>
-                       <div className={style.searchDel} onClick={clearHistoryList}>清空</div>
-                       <div className={style.searchHistory}>
-                           {
-                               hList.map(item=>(
-                                   <span key={item}>
+                    <div className={style.searchHistoryDiv}>
+                        <div className={style.searchDel} onClick={clearHistoryList}>清空</div>
+                        <div className={style.searchHistory}>
+                            {
+                                hList.map(item=>(
+                                    <span key={item}>
                                 {item}
                             </span>
-                               ))
-                           }
-                       </div>
-                   </div>
+                                ))
+                            }
+                        </div>
+                    </div>
                 }
                 <div className={style.searchAdvice}
                      onMouseEnter={handleMouseEnter}
@@ -126,63 +98,71 @@ class Header extends PureComponent {
         )
     };
 
-    onKeyDownDiv = async (isEnter,historyList,e) => {
-        if(isEnter&&e.keyCode === 13||!isEnter) {
-           this.inputRef.value&&this.props.addHistoryList(this.inputRef.value,historyList);
-            this.inputRef.value='';
-        }
-    };
-    goLogin=async ()=>{
-        console.log(
-            '111111111111',this.props.history
-        );
-      this.props.history.push('/login');
-    }
 
-}
-const mapStateToProps = (state) => {
-    return {
-        isFocus: state.getIn(['header', 'isFocus']),
-        hasToken: state.getIn(['login', 'hasToken']),
-        searchList: state.getIn(['header', 'searchList']),
-        defaultPageSize: state.getIn(['header', 'defaultPageSize']),
-        pageNum: state.getIn(['header', 'pageNum']),
-        totalPageNum: state.getIn(['header', 'totalPageNum']),
-        isSearchEnter: state.getIn(['header', 'isSearchEnter']),
-        historyList:state.getIn(['header','historyList'])
-    }
+    return (
+        <>
+          <Row className={style.headerDiv}>
+              <Col span={2} >
+                  <a href='/' className={style.headerLogo}>
+                      <img alt="logo" src={logoIcon}/>
+                  </a>
+              </Col>
+              {/*<Col span={8} xs={0} sm={0} md={0} lg={4} xl={6}  className={style.headerContent}>*/}
+              <Col span={16} className={style.headerContent}>
+                  {
+                      !hasToken ? (
+                          <Space size={[8,16]}>
+                              <Button type='text' >首页</Button>
+                              <Button type='text'>下载app</Button>
+                          </Space>
+                      ) : (
+                          <Space size={[8,16]}>
+                              <Button type='text' >发现</Button>
+                              <Button type='text'>关注</Button>
+                              <Button type='text'>消息</Button>
+                          </Space>
+                      )
+                  }
+                  <CSSTransition
+                      in={isFocus}
+                      timeout={1000}
+                      classNames="fade"
+                  >
+                      <div className={isFocus ? "headerSearch focusInput" : 'headerSearch noFocusInput'}>
+                          <input type="text" name="q" id="q"
+                                 autoComplete="off"
+                                 placeholder="搜索"
+                                 className={style.inputDefalut}
+                                 onBlur={inputBlur}
+                                 onFocus={() => inputFocus(searchList, defaultPageSize)}
+                                 onKeyDown={(e)=>this.onKeyDownDiv(true,historyList,e)}
+                                 ref={inputRef}
+                          />
+                          <div className={isFocus?style.iconSearch:''} onClick={(e)=>this.onKeyDownDiv(false,historyList,e)}>
+                              <i className="iconfont iconsousuo" ></i>
+                          </div>
+                          {(isFocus || isSearchEnter) && this.getSearchList()}
+                      </div>
+                  </CSSTransition>
+
+              </Col>
+
+              <Col span={6} >
+              {/*<Col span={6}  xs={0} sm={0} md={0} lg={4} xl={6}>*/}
+              <Space Size={[8,16]}>
+                  <a className={style.headerRightAa}>Aa</a>
+                  {
+                      !hasToken?<Link to='/login'><a  className={style.headerRightlogin} >登录</a></Link>:
+                          <a  className={style.headerRightlogin} onClick={logout} >退出登录</a>
+                  }
+                  <button type='text' className={style.headerRightRegistered}>注册</button>
+                  <button type='text' className={style.headerRightWrite}>
+                      写文章
+                  </button>
+              </Space>
+              </Col>
+          </Row>
+        </>
+    )
 };
-const mapDisPathToProps = (dispath) => {
-    return {
-        inputFocus(searchList, defaultPageSize) {
-            dispath(actionCreators.searchFocus());
-            searchList.size === 0 && dispath(actionCreators.getSearchList(defaultPageSize))
-        },
-        inputBlur() {
-            dispath(actionCreators.searchBlur())
-        },
-        handleMouseEnter() {
-            dispath(actionCreators.searchEnter())
-
-        },
-        handleMouseLeave() {
-            dispath(actionCreators.searchLever())
-
-        },
-        changeFocusList(pageNum, totalPageNum) {
-            let num = pageNum < totalPageNum ? pageNum + 1 : 1;
-            dispath(actionCreators.changeList(num))
-        },
-        addHistoryList(value,historyList){
-            dispath(actionCreators.addHistoryList(historyList.push(value)));
-        },
-        clearHistoryList(){
-            dispath(actionCreators.clearHistoryList())
-        },
-        logout(){
-            dispath(loginActionCreators.logout())
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDisPathToProps)(Header);
+export default Header;

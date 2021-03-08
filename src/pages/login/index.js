@@ -1,43 +1,66 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
+import React from 'react'
+import {Card,Form, Input, Button, Checkbox} from 'antd'
+import {useDispatch, useSelector} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import style from '@pages/login/login.module.less'
 import * as actionCreators from './store/actionCreators'
 
 
-class Login extends PureComponent {
-    render() {
-        const {goLogin,hasToken}=this.props;
-        if(hasToken){
-             return   <Redirect to='/'/>
+const Login = () => {
+    const {hasToken}=useSelector(state=>(
+        {
+            hasToken:state.getIn(['login','hasToken'])
         }
-        else{
-          return (
-              <div className={style.login_div}>
-                  <div className={style.main}>
-                      <span>登录</span>
-                      <div className={style.input}>
-                          <input type='text'placeholder='手机号或者邮箱'/>
-                          <input type='password' placeholder='密码'/>
-                      </div>
-                      <div className={style.btn} onClick={goLogin}>登录</div>
-                  </div>
-              </div>
-          )
-        }
-    }
-}
+    ));
+    const disPath=useDispatch();
+    const goLogin=()=>{
+        disPath(actionCreators.goLogin())
+    };
+    const tailLayout = {
+        wrapperCol: {offset: 8, span: 16},
+    };
 
-const mapStateToProps=(state)=>{
-    return {
-        hasToken:state.getIn(['login','hasToken'])
-    }
+    return (
+        <>
+            {
+                !hasToken?<Redirect to='/'/>:<div className={style.login_div}>
+
+                    <Card title="登录" style={{width: 400}}>
+                        <Form
+                            name="basic"
+                            initialValues={{remember: true}}
+                        >
+                            <Form.Item
+                                label="Username"
+                                name="username"
+                                rules={[{required: true, message: 'Please input your username!'}]}
+                            >
+                                <Input/>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Password"
+                                name="password"
+                                rules={[{required: true, message: 'Please input your password!'}]}
+                            >
+                                <Input.Password/>
+                            </Form.Item>
+
+                            <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+                                <Checkbox>Remember me</Checkbox>
+                            </Form.Item>
+
+                            <Form.Item {...tailLayout}>
+                                <Button type="primary" htmlType="submit" onClick={goLogin}>
+                                    Submit
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Card>
+                </div>
+
+            }
+        </>
+    )
 };
-const mapDispatchToProps=(dispath)=>{
-    return{
-        goLogin(){
-            dispath(actionCreators.goLogin())
-        }
-    }
-};
-export default connect(mapStateToProps,mapDispatchToProps)(Login);
+export default Login;
