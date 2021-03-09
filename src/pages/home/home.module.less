@@ -1,101 +1,103 @@
-.homeContent{
-  width: calc(100vw - 10%);
-  height: calc(100vh - 56px);
-  margin: 0 auto;
-  padding: 20px;
+.userInfoUrl {
+  display: flex;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.homeContent {
+  padding-top: 30px;
+
+}
+
+.userName {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 16px;
+
+}
+
+.numInfoDiv {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 
-  .contentLeft{
-    margin-left: 124px;
+  .numInfoDivItm {
     display: flex;
     flex-direction: column;
-    flex: 3;
-    .leftUserInfo{
-      display: flex;
-      flex-direction: row;
-      .userInfoUrl{
-        display: flex;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin-right: 16px;
-      }
-      .userInfoContext{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        .userName{
-          font-size: 24px;
-          color:#333;
-          margin-bottom: 16px;
-        }
-        .numInfoDiv{
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          .numInfoDivItm{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 6px;
-            border-right:1px solid #eee;
-            margin-top: 4px;
-            cursor: pointer;
-            span:nth-child(2n-1){
-                 font-size: 14px;
-              color: #000;
-            }
-            span:nth-child(2n){
-              margin-top: 4px;
-              font-size: 12px;
-              color: #999;
-            }
+    align-items: center;
+    padding: 0 6px;
+    border-right: 1px solid #eee;
+    margin-top: 4px;
+    cursor: pointer;
 
-          }
-        }
-      }
-      .userInfoBtn{
-        display: flex;
-        flex-direction: row;
-        margin-top: 10px;
-        .btnSend{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border: 1px solid rgba(59,194,29,.7);
-          color: #42c02e!important;
-          margin: 23px 0 23px 16px;
-          font-size: 15px;
-          padding: 8px 0;
-          width: 80px;
-          height: 40px;
-          border-radius: 20px;
-          cursor: pointer;
-        }
-        .btnAdd{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #fff;
-          background-color: #42c02e;
-          margin: 23px 0 23px 16px;
-          font-size: 15px;
-          padding: 8px 0;
-          width: 80px;
-          height: 40px;
-          border-radius: 20px;
-          cursor: pointer;
+    span:nth-child(2n-1) {
+      font-size: 14px;
+      color: #000;
+    }
 
-        }
-      }
+    span:nth-child(2n) {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #999;
+    }
+
+  }
+}
+
+.userInfoBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .btnSend {
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .btnAdd {
+    border-radius: 20px;
+    cursor: pointer;
+
+  }
+}
+
+.projectDiv {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+
+  span {
+    font-size: 14px;
+    color: #969696;
+    margin-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .projectItem {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+
+    img {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10%;
+    }
+
+    p {
+      vertical-align: middle;
+      top: 1px;
+      font-size: 14px;
+      color: #333;
+      margin-left: 10px;
+      margin-bottom: 0 !important;
     }
   }
-  .contentRight{
-    display: flex;
-    flex-direction: column;
-    flex:2;
-    margin-left: 20px;
+}
+
     .corpusDiv{
       display: flex;
       flex-direction: column;
@@ -110,7 +112,6 @@
       .corpusItem{
         display: flex;
         flex-direction: row;
-        margin-bottom: 10px;
         p{
           vertical-align: middle;
           top: 1px;
@@ -120,36 +121,6 @@
         }
       }
     }
-    .projectDiv{
-     display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid #eee;
-      margin: 0 10px;
-      span{
-        font-size: 14px;
-        color: #969696;
-        margin-bottom: 10px;
-        padding-top: 10px;
-      }
-     .projectItem{
-       display: flex;
-       flex-direction: row;
-       margin-bottom: 10px;
-       img{
-         width: 20px;
-         height: 20px;
-         border: 1px solid #ddd;
-         border-radius: 10%;
-       }
-       p{
-         vertical-align: middle;
-         top: 1px;
-         font-size: 14px;
-         color: #333;
-         margin-left: 10px;
-       }
-     }
-    }
-  }
-}
+
+
 

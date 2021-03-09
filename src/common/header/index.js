@@ -1,4 +1,4 @@
-import React, {useRef,useEffect} from 'react'
+import React, {useRef} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useHistory } from 'react-router-dom'
 import logoIcon from '@assets/logo.png'
@@ -32,6 +32,7 @@ const Header = () => {
         dispatch(actionCreators.searchBlur())
     };
     const addHistoryList = (value) => {
+        console.log('11111111111111',value);
         dispatch(actionCreators.addHistoryList(historyList.push(value)));
     };
 
@@ -57,7 +58,7 @@ const Header = () => {
                       <img alt="logo" src={logoIcon}/>
                   </a>
               </Col>
-              <Col span={12} className={style.headerContent} xs={0} sm={0} md={0} lg={4} xl={12}>
+              <Col span={12} className={style.headerContent} md={0} lg={7} xl={12}>
                   {
                       !hasToken ? (
                           <Space size={[8,16]}>
@@ -96,7 +97,7 @@ const Header = () => {
 
               </Col>
 
-              <Col span={8} xs={0} sm={0} md={0} lg={4} xl={8}>
+              <Col span={8} xs={0} sm={0} md={0} lg={0} xl={8}>
               <Space Size={[8,16]}>
                   <a className={style.headerRightAa}>Aa</a>
                   {

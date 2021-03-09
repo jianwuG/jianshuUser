@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {actionCreators} from "../header/store";
 import {Space, Button} from 'antd'
@@ -14,6 +14,16 @@ const SearchDiv = () => {
 
     }));
     let dispatch = useDispatch();
+    const [list,setList]=useState([]);
+    const [hList,setHList]=useState([]);
+    useEffect(()=>{
+        let _list = searchList.toJS().slice((pageNum - 1) * defaultPageSize, pageNum * defaultPageSize);
+        setList(_list);
+    },[pageNum,searchList]);
+    useEffect(()=>{
+        let _hList = historyList.toJS();
+        setHList(_hList);
+    },[historyList]);
     const handleMouseEnter = () => {
         dispatch(actionCreators.searchEnter())
     };
@@ -27,16 +37,13 @@ const SearchDiv = () => {
         let num = pageNum < totalPageNum ? pageNum + 1 : 1;
         dispatch(actionCreators.changeList(num))
     };
-
-    let list = searchList.toJS().slice((pageNum - 1) * defaultPageSize, pageNum * defaultPageSize);
-    let hList = historyList.toJS();
     return (
         <>
             <div className={style.searchDiv}>
                 {
                     hList.length > 0 &&
                     <div className={style.searchHistoryDiv}>
-                        <Button type='text' className={style.searchDel} onClick={clearHistoryList}>清空</Button>
+                        {/*<Button type='link' className={style.searchDel} onClick={clearHistoryList}>清空</Button>*/}
                         <Space size={[2, 6]} wrap className={style.searchHistory}>
                             {
                                 hList.map(item => (
@@ -53,7 +60,7 @@ const SearchDiv = () => {
                      onMouseLeave={handleMouseLeave}
                 >
 
-                    <Button type='text' className={style.searchChange} onClick={() => changeFocusList(pageNum, totalPageNum)}>切换</Button>
+                    <Button type='link' className={style.searchChange} onClick={() => changeFocusList(pageNum, totalPageNum)}>切换</Button>
                     <Space size={[2, 6]} wrap className={style.searchList}>
                         {
                             list.map(item => (

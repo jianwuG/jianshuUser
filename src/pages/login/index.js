@@ -3,7 +3,7 @@ import {Card,Form, Input, Button, Checkbox} from 'antd'
 import {useDispatch, useSelector} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import * as actionCreators from './store/actionCreators'
-import style from '@pages/login/login.module.less'
+import style from './login.module.less'
 
 const Login = () => {
     const {hasToken}=useSelector(state=>(

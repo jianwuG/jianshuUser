@@ -4,7 +4,6 @@ import {actionCreators} from '@pages/home/store'
 import FocusList from './../focusList'
 import style from './index.module.less'
 
-
 const Focus = () => {
     const {focusIndex} = useSelector(state => ({
         focusIndex: state.getIn(['home', 'focusIndex']),

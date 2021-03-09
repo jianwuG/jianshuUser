@@ -1,22 +1,45 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import Header from '@common/header';
+import {Row, Col, Avatar, Button, Space,Divider} from 'antd'
 import WordTab from './component/wordTab'
 import Focus from './component/focus'
 import {actionCreators} from './store';
-import style from '@pages/home/home.module.less'
+import style from './home.module.less'
 
+const Home = () => {
+    const {bloggerInfo, showFocus} = useSelector(state => ({
+        bloggerInfo: state.getIn(['home', 'bloggerInfo']),
+        showFocus: state.getIn(['home', 'showFocus'])
+    }));
+    let [bloggerObj, setBlogger] = useState({});
+    useEffect(() => {
+        dispatch(actionCreators.getBloggerInfo())
+    }, [])
+    useEffect(() => {
+        setBlogger(bloggerInfo.toJS())
+    }, [bloggerInfo]);
+    let dispatch = useDispatch();
 
-class Home extends PureComponent {
-    componentDidMount() {
-        this.props.getBloggerInfo();
-    }
-     getProject=(text,projectInfo)=>{
-        return(
+    const setShowFocus = (isShow, index) => {
+        let _isShow;
+        if (index === 1 || index === 0) {
+            _isShow = true;
+        } else if (index === 2) {
+            _isShow = false;
+        }
+
+        (index === 1 || index === 2 || index === 0) &&
+        dispatch(actionCreators.setShowFocus(_isShow)) &&
+        dispatch(actionCreators.setFocusIndex(index)) &&
+        dispatch(actionCreators.getFans());
+    };
+    const getProject = (text, projectInfo) => {
+        return (
             <div className={style.projectDiv}>
-                <span>{text}</span>
+                <Divider>{text}</Divider>
                 {
-                    projectInfo&&projectInfo.map(item=>(
+                    projectInfo && projectInfo.map(item => (
                         <div key={item.id} className={style.projectItem}>
                             <img src={item.icon} alt=''/>
                             <p>{item.name}</p>
@@ -26,67 +49,66 @@ class Home extends PureComponent {
             </div>
         )
     };
-
-    render() {
-        const {bloggerInfo,showFocus,setShowFocus} = this.props;
-        const {url, name, gender, numInfo,corpus,
-            createProject,managementProject
-        } = bloggerInfo.toJS();
-
-        return (
-            <>
-                <Header></Header>
-                <div className={style.homeContent}>
-                    <div className={style.contentLeft}>
-                        <div className={style.leftUserInfo}>
-                            <img src={url} alt="" className={style.userInfoUrl}/>
-                            <div className={style.userInfoContext}>
-                                <div className={style.userName}>
-                                    <span>{name}</span>
-                                    <i className={gender ? 'iconnan iconfont' : 'iconnv iconfont'}></i>
-                                </div>
+    const {name, gender, numInfo, corpus, createProject, managementProject} = bloggerObj;
+    return (
+        <div>
+            <Header></Header>
+            <Row justify='center' className={style.homeContent}>
+                <Col span={10} gutter={{xs:2,sm:4,md:6,lg:10}}>
+                    <Row wrap='false'>
+                        <Col span={4} sm={0} md={4}>
+                            <Avatar src={bloggerObj.url} size={80}/>
+                        </Col>
+                        <Col span={12} className={style.userName} xs={6} sm={8} md={10} lg={12} >
+                            <span>{name}</span>
+                            <i className={gender ? 'iconnan iconfont' : 'iconnv iconfont'}></i>
+                            <div>
                                 {
                                     numInfo && (
-                                      <div className={style.numInfoDiv}>
-                                          {
-                                              numInfo.map((item,index) => (
-                                                  <div className={style.numInfoDivItm} key={item.id} onClick={()=>setShowFocus(true,index)}>
-                                                      <span>{item.text}</span>
-                                                      <span>{item.num}
-                                                          {
-                                                              item.canClick&&<i> ></i>
-                                                          }
+                                        <div className={style.numInfoDiv}>
+                                            {
+                                                numInfo.map((item, index) => (
+                                                    <div className={style.numInfoDivItm} key={item.id}
+                                                         onClick={() => setShowFocus(true, index)}>
+                                                        <span>{item.text}</span>
+                                                        <span>{item.num}
+                                                            {
+                                                                item.canClick && <i> ></i>
+                                                            }
                                                       </span>
-                                                  </div>
-                                              ))
-                                          }
-                                      </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
                                     )
 
                                 }
                             </div>
-                            <div className={style.userInfoBtn}>
-                                <span className={style.btnSend}>发简信</span>
-                                <span className={style.btnAdd}>+关注</span>
-                            </div>
-                        </div>
-                        {
-                            showFocus?<Focus></Focus>:<WordTab></WordTab>
+                        </Col>
 
-                        }
-
-                    </div>
+                        <Col span={6} className={style.userInfoBtn} sm={0}  md={6}>
+                            <Space>
+                                <Button type='primary' className={style.btnSend}>发简信</Button>
+                                <Button type='ghost' className={style.btnAdd}>+关注</Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                    {
+                        showFocus ? <Focus></Focus> : <WordTab></WordTab>
+                    }
+                </Col>
+                <Col span={4}  xs={0} md={0} lg={4} push={1}>
                     <div className={style.contentRight}>
                         {
-                            this.getProject("他创建的专题",createProject)
+                            getProject("他创建的专题", createProject)
                         }
                         {
-                            this.getProject('他管理的专题',managementProject)
+                            getProject('他管理的专题', managementProject)
                         }
                         <div className={style.corpusDiv}>
-                            <span>他的文集</span>
+                            <Divider>他的文集</Divider>
                             {
-                                corpus&&corpus.map(item=>(
+                                corpus && corpus.map(item => (
                                     <div className={style.corpusItem}>
                                         <i className='iconfont iconsvgwrite'></i>
                                         <p>{item.name}</p>
@@ -95,39 +117,12 @@ class Home extends PureComponent {
                             }
                         </div>
                     </div>
+                </Col>
+            </Row>
+        </div>
 
-                </div>
-            </>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        bloggerInfo: state.getIn(['home', 'bloggerInfo']),
-        showFocus: state.getIn(['home', 'showFocus'])
-    }
-};
-const mapDispatchToProps = (dispath) => {
-    return {
-        getBloggerInfo() {
-            dispath(actionCreators.getBloggerInfo())
-        },
-        setShowFocus(isShow,index){
-            let _isShow;
-            if(index===1||index===0){
-                _isShow=true;
-            }
-            else if(index===2){
-                _isShow=false;
-            }
-
-            (index===1||index===2||index===0)&&
-            dispath(actionCreators.setShowFocus(_isShow))&&
-            dispath(actionCreators.setFocusIndex(index))&&
-            dispath(actionCreators.getFans());
-        }
-    }
+    )
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
+
